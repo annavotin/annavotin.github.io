@@ -141,6 +141,10 @@ h1{font-family:'Bricolage',sans-serif;font-weight:600;
   box-shadow:0 8px 18px -10px rgba(46,58,140,.85)}
 .btn:hover{transform:translateY(-1px)}
 
+/* The one line the form talks back with. */
+.say{font-size:14px;margin-top:11px;max-width:46ch;color:var(--muted)}
+.say.bad{color:#9b2c2c}
+
 /* ── Doodles ───────────────────────────────────────────────────────────
    Loose strokes in the margins. Decorative: aria-hidden, no pointer
    events, and each one only appears where there is room beside the text. */
@@ -227,10 +231,18 @@ h1{font-family:'Bricolage',sans-serif;font-weight:600;
 
       <div class="cta-wrap rise d4">
         <!-- Pre-launch. Endpoint goes in action="". -->
-        <form class="cta" method="post" action="">
+        <!-- The action is the no-JavaScript fallback: PostgREST takes the key as a
+             query parameter and a plain form post still records the address.
+             With JavaScript the submit below is intercepted so the reader stays
+             on the page. The key is the project's anon key and is public by
+             design — the table's policy lets it INSERT and nothing else, so it
+             cannot be used to read the list back. -->
+        <form class="cta" id="signup" method="post"
+              action="https://ituxcfmqxtvpxzzjfcin.supabase.co/rest/v1/signups?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml0dXhjZm1xeHR2cHh6empmY2luIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMwNjAwNTYsImV4cCI6MjEwODYzNjA1Nn0.n615q_RaIp_bhTbcDOT4HSpIa82SrW10mADbm0Ue1qM">
           <input type="email" name="email" placeholder="you@example.com" aria-label="Email address" required>
           <button class="btn" type="submit">Join the beta</button>
         </form>
+        <p class="say" id="say" role="status" aria-live="polite"></p>
         <!-- Launch day: delete the form above, uncomment this.
         <p class="cta"><a class="btn" href="TESTFLIGHT_URL">Get it on TestFlight</a></p> -->
       </div>
@@ -271,5 +283,49 @@ h1{font-family:'Bricolage',sans-serif;font-weight:600;
   </div>
 </footer>
 
+<script>
+(function () {
+  var ENDPOINT = 'https://ituxcfmqxtvpxzzjfcin.supabase.co/rest/v1/signups';
+  var KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml0dXhjZm1xeHR2cHh6empmY2luIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMwNjAwNTYsImV4cCI6MjEwODYzNjA1Nn0.n615q_RaIp_bhTbcDOT4HSpIa82SrW10mADbm0Ue1qM';
+  var form = document.getElementById('signup');
+  var say  = document.getElementById('say');
+  var btn  = form.querySelector('button');
+
+  function tell(msg, bad) { say.textContent = msg; say.className = bad ? 'say bad' : 'say'; }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var email = form.email.value.trim();
+    if (!email) return;
+    btn.disabled = true;
+    tell('Sending…');
+
+    fetch(ENDPOINT, {
+      method: 'POST',
+      headers: {
+        'apikey': KEY,
+        'Authorization': 'Bearer ' + KEY,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({ email: email, source: 'landing' })
+    }).then(function (r) {
+      // 409 is the unique index: they already signed up, which is not an error
+      // worth showing them.
+      if (r.ok || r.status === 409) {
+        form.hidden = true;
+        tell(r.status === 409
+          ? "You're already on the list — invite coming when it's ready."
+          : "You're on the list. I'll send a TestFlight invite when it's ready.");
+      } else {
+        throw new Error(r.status);
+      }
+    }).catch(function () {
+      btn.disabled = false;
+      tell('That didn\u2019t send. Try again in a moment?', true);
+    });
+  });
+})();
+</script>
 </body>
 </html>
