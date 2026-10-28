@@ -90,40 +90,14 @@ h1{font-family:'Bricolage',sans-serif;font-weight:600;
 /* The app's paper is the same #ecebe7 as this page, so the screens blend into
    it. A brightness lift pushes that paper to near-white while barely moving
    the ink (#26262a -> #29292d), which makes the phones read as lit objects.
-   Not on .back: Apple Calendar is already white and would just wash out. */
-.fan img:not(.back){filter:brightness(1.08)}
+   Applied to every Tolli screen, including the one in the comparison, so it
+   does not sit there looking dingy beside Apple's genuinely white page.
+   Never to the Apple shot itself: already white, it would only wash out. */
+.fan img, .pair .tolli img{filter:brightness(1.08)}
 .f1{left:4px;   top:46px;  transform:rotate(-7.5deg)}
 .f2{left:124px; top:2px;   transform:rotate(1.5deg);  width:238px; z-index:2}
 .f3{left:280px; top:58px;  transform:rotate(7.5deg)}
 .fan figure:hover{transform:translateY(-12px) rotate(0deg) scale(1.02);z-index:3}
-
-/* ── The turn ──────────────────────────────────────────────────────────
-   The month frame turns over to show the same month in Apple Calendar —
-   same device, same seeded data, same minute. A checkbox drives it, not
-   script, so the page still ships no JavaScript.                       */
-.flip{perspective:1600px}
-.flip-toggle{position:absolute;width:1px;height:1px;opacity:0;margin:0}
-/* The pointer becomes a "Click Me!" badge over this frame. A raster image,
-   not SVG: Safari does not accept SVG cursors. Source is
-   img/cursor-click-me.svg; regeneration is in README.md. Chrome ignores
-   cursor images over 128px, so the badge is 128x40 and no larger. */
-.flip-inner{position:relative;display:block;transform-style:preserve-3d;
-  cursor:url("data:image/png;base64,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") 64 20, pointer}
-.flip-toggle:checked ~ .flip-inner{transform:rotateY(180deg)}
-.flip-inner .face{backface-visibility:hidden;-webkit-backface-visibility:hidden}
-.flip-inner .back{position:absolute;inset:0;width:100%;height:100%;transform:rotateY(180deg)}
-.flip-toggle:focus-visible ~ .flip-inner{outline:3px solid var(--accent);outline-offset:6px;border-radius:38px}
-
-/* Touch devices get no cursor, so they get a line of the page's own ink
-   instead. Hidden wherever a hover pointer exists. */
-.touch-hint{display:none}
-@media (hover:none){
-  .touch-hint{display:flex;align-items:center;justify-content:center;gap:9px;
-    margin-top:15px;font-size:14px;color:var(--muted);line-height:1.3}
-  .touch-hint svg{width:27px;flex:0 0 auto;color:var(--accent);opacity:.6}
-  .touch-hint path{fill:none;stroke:currentColor;stroke-width:2.2;
-    stroke-linecap:round;stroke-linejoin:round}
-}
 
 /* ── Sign-up ───────────────────────────────────────────────────────────
    ▸ TO GO LIVE: put your form endpoint in action="" below.
@@ -161,6 +135,25 @@ h1{font-family:'Bricolage',sans-serif;font-weight:600;
 @media (min-width:1240px){ .d-curl,.d-star{display:block} }
 @media (min-width:1360px){ .d-zig{display:block} }
 
+/* ── The reasoning ─────────────────────────────────────────────────────
+   Below the fold on purpose: the screen above is the pitch, this is the
+   argument for anyone who scrolls to ask why.                           */
+.why{border-top:1px solid var(--hairline);padding:72px 0 80px}
+.why-in{max-width:1080px;margin:0 auto;padding:0 24px}
+.why h2{font-family:'Bricolage',sans-serif;font-weight:600;
+        font-size:clamp(25px,3vw,34px);line-height:1.1;letter-spacing:-.022em;
+        max-width:19ch}
+.why p{font-size:17px;color:var(--muted);max-width:58ch;margin-top:17px}
+.why p strong{color:var(--ink);font-weight:600}
+
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:28px;max-width:720px;margin-top:44px}
+.pair figure{margin:0}
+.pair img{width:100%;border-radius:26px;border:3px solid var(--ink);background:var(--card);
+          box-shadow:0 18px 36px -20px rgba(38,38,42,.4)}
+.pair figcaption{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:11px}
+.pair figcaption span{font-weight:400;color:var(--muted)}
+.pair-note{font-size:14px;color:var(--muted);margin-top:18px;max-width:58ch}
+
 /* ── Footer ────────────────────────────────────────────────────────────
    Below the fold on purpose: the screen above is the pitch, this is the
    small print you go looking for.                                       */
@@ -190,6 +183,10 @@ h1{font-family:'Bricolage',sans-serif;font-weight:600;
   .doodle{display:none}
   .d-spark{display:block;top:10px;right:2px;width:32px;opacity:.4}
   .foot-in,.foot-end{padding:0 20px}
+  .why{padding:48px 0 54px}
+  .why-in{padding:0 20px}
+  .pair{gap:14px;margin-top:32px}
+  .pair img{border-radius:18px;border-width:2px}
 }
 
 /* ── Life ──────────────────────────────────────────────────────────────
@@ -202,7 +199,6 @@ h1{font-family:'Bricolage',sans-serif;font-weight:600;
   .d1{animation-delay:.1s}  .d2{animation-delay:.2s}
   .d3{animation-delay:.32s} .d4{animation-delay:.44s}
   .btn{transition:transform .15s, opacity .15s}
-  .flip-inner{transition:transform .85s cubic-bezier(.3,.85,.3,1)}
 }
 @keyframes rise{to{opacity:1;transform:none}}
 </style>
@@ -252,25 +248,40 @@ h1{font-family:'Bricolage',sans-serif;font-weight:600;
     <div class="fan rise d3">
       <figure class="f1"><img src="img/03-week-ink.webp" width="720" height="1566" alt="Tolli's week page with ink: Thursday's 'Keynote' circled in indigo and Wednesday's 'Flight to Lisbon' swiped with a butter-yellow highlighter, both drawn over real calendar events."></figure>
 
-      <figure class="f2 flip">
-        <input type="checkbox" id="flip-month" class="flip-toggle">
-        <label class="flip-inner" for="flip-month">
-          <img class="face front" src="img/02-month-priorities.webp" width="720" height="1566" alt="Tolli's month page: October, with a handful of days circled by hand and labelled in handwriting — Post office, Eye test, Site visit, Day trip, Dentist, Q4 review, Flight to Lisbon, Keynote — and the rest of the month left plain.">
-          <img class="face back" src="img/04-apple-calendar-same-month.webp" width="720" height="1566" alt="The same October in Apple Calendar: every day packed with cut-off event chips reading 'Deep wo', 'Post offi', 'Breakfas', and '+5', '+4' and '+3' hiding the rest.">
-        </label>
-      </figure>
+      <figure class="f2"><img src="img/02-month-priorities.webp" width="720" height="1566" alt="Tolli's month page: October, with a handful of days circled by hand and labelled in handwriting — Post office, Eye test, Site visit, Day trip, Dentist, Q4 review, Flight to Lisbon, Keynote — and the rest of the month left plain."></figure>
 
       <figure class="f3"><img src="img/05-day-timeline.webp" width="720" height="1566" alt="Tolli's day view: a 24-hour timeline with hand-drawn blocks sized by how long each event runs — a short Standup as a thin sliver, Deep work and Design review side by side where they overlap — under a week strip with the circled priority days."></figure>
     </div>
-
-      <p class="touch-hint">
-        <svg viewBox="0 0 32 30" aria-hidden="true"><path d="M3 27c1.5-13 9.5-21.5 23-23.5"/><path d="M19.5 1.5l6.5 2-1.5 6.5"/></svg>
-        <span>Tap the month to see it in Apple Calendar</span>
-      </p>
     </div>
   </div>
 
 </div>
+
+
+<section class="why">
+  <div class="why-in">
+    <h2>Why the month only shows one thing a day</h2>
+
+    <p>A month grid draws a flight, a deadline and a gym session identically. Forty things at the same weight is the same as no information at all — so the one view you go to for <strong>what's coming up</strong> is the one that can't tell you.</p>
+
+    <p>Every app's answer to “make this stand out” is a settings screen: a flag, a priority from one to five, a tag to invent and then keep maintaining. The effort is charged up front, every single time, so nobody keeps it up and the calendar stays flat.</p>
+
+    <p>Tolli asks for one tap, on the handful of days that have something big. That is the <strong>smallest amount of structure that can do the job</strong> — not a rank, not a tag, one bit on the days that matter. Nothing is hidden from your real calendar: the week page still has every last gym session. You just stopped having to read them all at once.</p>
+
+    <div class="pair">
+      <figure>
+        <figcaption>Apple Calendar</figcaption>
+        <img src="img/04-apple-calendar-same-month.webp" width="720" height="1566" loading="lazy" alt="The same October in Apple Calendar: every day packed with cut-off event chips reading 'Deep wo', 'Post offi' and 'Breakfas', with '+5', '+4' and '+3' hiding the rest.">
+      </figure>
+      <figure class="tolli">
+        <figcaption>Tolli</figcaption>
+        <img src="img/02-month-priorities.webp" width="720" height="1566" loading="lazy" alt="The same October in Tolli: a handful of days circled by hand and labelled in handwriting — Post office, Eye test, Site visit, Day trip, Dentist, Q4 review, Flight to Lisbon, Keynote — and the rest of the month left plain.">
+      </figure>
+    </div>
+
+    <p class="pair-note">The same October, the same phone, the same minute, the same calendar underneath. Only the reading of it differs.</p>
+  </div>
+</section>
 
 <footer class="foot">
   <div class="foot-in">
