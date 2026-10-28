@@ -136,25 +136,34 @@ h1{font-family:'Bricolage',sans-serif;font-weight:600;
 @media (min-width:1360px){ .d-zig{display:block} }
 
 /* ── The reasoning ─────────────────────────────────────────────────────
-   Below the fold on purpose: the screen above is the pitch, this is the
-   argument for anyone who scrolls to ask why.                           */
-.why{border-top:1px solid var(--hairline);padding:72px 0 80px}
-.why-in{max-width:1080px;margin:0 auto;padding:0 24px}
+   Below the fold: the two months side by side with the argument beside
+   them, not under them, so it costs one screen rather than three.      */
+.why{border-top:1px solid var(--hairline);padding:64px 0 72px}
+.why-in{max-width:1080px;margin:0 auto;padding:0 24px;
+        display:grid;grid-template-columns:auto minmax(0,420px);gap:60px;
+        align-items:center;justify-content:center}
 .why h2{font-family:'Bricolage',sans-serif;font-weight:600;
-        font-size:clamp(25px,3vw,34px);line-height:1.1;letter-spacing:-.022em;
-        max-width:19ch}
-.why p{font-size:17px;color:var(--muted);max-width:58ch;margin-top:17px}
+        font-size:clamp(24px,2.7vw,32px);line-height:1.12;letter-spacing:-.022em;max-width:16ch}
+.why p{font-size:16px;color:var(--muted);margin-top:14px}
 .why p strong{color:var(--ink);font-weight:600}
 
-.pair{display:grid;grid-template-columns:1fr 1fr;gap:28px;max-width:720px;margin-top:44px}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:18px;width:400px}
 .pair figure{margin:0}
-.pair img{width:100%;border-radius:26px;border:3px solid var(--ink);background:var(--card);
-          box-shadow:0 18px 36px -20px rgba(38,38,42,.4)}
-.pair figcaption{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:11px}
-.pair figcaption span{font-weight:400;color:var(--muted)}
-.pair-note{font-size:14px;color:var(--muted);margin-top:18px;max-width:58ch}
+.pair figcaption{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:10px}
 
-/* ── Footer ────────────────────────────────────────────────────────────
+/* The same drawn device as the App Store frames: an even bezel band, a
+   body corner equal to the screen corner plus that band, graphite
+   buttons where the hardware has them. */
+.dev{position:relative;background:#1e1e22;padding:7px;border-radius:32px;
+     box-shadow:inset 0 0 0 2px rgba(104,104,112,.5)}
+.dev img{display:block;width:100%;border-radius:25px}
+.dev::before,.dev::after{content:"";position:absolute;width:3px;border-radius:2px}
+.dev::before{left:-3px;top:23%;height:25%;
+             background:linear-gradient(#38383e 0 32%,transparent 32% 41%,#38383e 41% 100%)}
+.dev::after{right:-3px;top:29%;height:14%;background:#38383e}
+.tolli img{filter:brightness(1.08)}
+
+/* ── Footer ───/* ── Footer ────────────────────────────────────────────────────────────
    Below the fold on purpose: the screen above is the pitch, this is the
    small print you go looking for.                                       */
 .foot{border-top:1px solid var(--hairline);padding:22px 0 28px;
@@ -182,10 +191,11 @@ h1{font-family:'Bricolage',sans-serif;font-weight:600;
   .doodle{display:none}
   .d-spark{display:block;top:10px;right:2px;width:32px;opacity:.4}
   .foot-in,.foot-end{padding:0 20px}
-  .why{padding:48px 0 54px}
-  .why-in{padding:0 20px}
-  .pair{gap:14px;margin-top:32px}
-  .pair img{border-radius:18px;border-width:2px}
+  .why{padding:44px 0 50px}
+  .why-in{grid-template-columns:1fr;gap:28px;padding:0 20px}
+  .pair{width:100%;max-width:330px;gap:14px}
+  .dev{padding:5px;border-radius:24px}
+  .dev img{border-radius:19px}
 }
 
 /* ── Life ──────────────────────────────────────────────────────────────
@@ -260,26 +270,24 @@ h1{font-family:'Bricolage',sans-serif;font-weight:600;
 
 <section class="why">
   <div class="why-in">
-    <h2>Why the month only shows one thing a day</h2>
-
-    <p>A month grid draws a flight, a deadline and a gym session identically. Forty things at the same weight is the same as no information at all — so the one view you go to for <strong>what's coming up</strong> is the one that can't tell you.</p>
-
-    <p>Every app's answer to “make this stand out” is a settings screen: a flag, a priority from one to five, a tag to invent and then keep maintaining. The effort is charged up front, every single time, so nobody keeps it up and the calendar stays flat.</p>
-
-    <p>Tolli asks for one tap, on the handful of days that have something big. That is the <strong>smallest amount of structure that can do the job</strong> — not a rank, not a tag, one bit on the days that matter. Nothing is hidden from your real calendar: the week page still has every last gym session. You just stopped having to read them all at once.</p>
 
     <div class="pair">
       <figure>
         <figcaption>Apple Calendar</figcaption>
-        <img src="img/04-apple-calendar-same-month.webp" width="720" height="1566" loading="lazy" alt="The same October in Apple Calendar: every day packed with cut-off event chips reading 'Deep wo', 'Post offi' and 'Breakfas', with '+5', '+4' and '+3' hiding the rest.">
+        <div class="dev"><img src="img/04-apple-calendar-same-month.webp" width="720" height="1566" loading="lazy" alt="The same October in Apple Calendar: every day packed with cut-off chips and '+5', '+4' and '+3' hiding the rest."></div>
       </figure>
-      <figure class="tolli">
+      <figure>
         <figcaption>Tolli</figcaption>
-        <img src="img/02-month-priorities.webp" width="720" height="1566" loading="lazy" alt="The same October in Tolli: a handful of days circled by hand and labelled in handwriting — Post office, Eye test, Site visit, Day trip, Dentist, Q4 review, Flight to Lisbon, Keynote — and the rest of the month left plain.">
+        <div class="dev tolli"><img src="img/02-month-priorities.webp" width="720" height="1566" loading="lazy" alt="The same October in Tolli: a handful of days circled by hand and labelled in handwriting, the rest of the month left plain."></div>
       </figure>
     </div>
 
-    <p class="pair-note">The same October, the same phone, the same minute, the same calendar underneath. Only the reading of it differs.</p>
+    <div>
+      <h2>The same month, twice</h2>
+      <p>A month grid draws a flight and a gym session identically, so the one view you check for <strong>what's coming up</strong> is the one that can't tell you.</p>
+      <p>Tolli shows the day's one thing, the one you picked. Nothing is hidden: the week page still has every last gym session.</p>
+    </div>
+
   </div>
 </section>
 
